@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -193,87 +193,150 @@
       </p>
     </div>
   </div>
+<!-- ✅ Lucide Icons CDN -->
+<script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- ✅ Firebase Logic -->
+<style>
+  /* 🌊 Wave Bottom Navbar */
+  .wave-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    clip-path: polygon(0 20%, 15% 0, 85% 0, 100% 20%, 100% 100%, 0 100%);
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding-bottom: 10px;
+    z-index: 1000;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
+  }
+  .wave-nav a {
+    flex: 1;
+    text-align: center;
+    font-size: 13px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+  .wave-nav a:hover {
+    opacity: 0.85;
+  }
+  .wave-nav a.active {
+    color: #ffeb3b;
+  }
+  .wave-nav i {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  /* 👇 Body me jagah */
+  body {
+    padding-bottom: 80px; /* navbar ke liye space */
+  }
+</style>
+
+<!-- 🌊 Wave Bottom Navigation -->
+<div class="wave-nav">
+  <a href="dashboard.html" class="active">
+    <i data-lucide="home"></i>
+    Home
+  </a>
+  <a href="investment.html">
+    <i data-lucide="trending-up"></i>
+    Invest
+  </a>
+  <a href="account.html">
+    <i data-lucide="user"></i>
+    Account
+  </a>
+</div>
+
+<script>
+  // ✅ Render Lucide Icons
+  lucide.createIcons();
+</script>
+
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-    // 🔥 Firebase Config
-    const firebaseConfig = {
-      apiKey: "AIzaSyDEQYPJFxQv8yFHptrTqoLHOn2L0PpgVhc",
-      authDomain: "btcinvest-c0e25.firebaseapp.com",
-      projectId: "btcinvest-c0e25",
-      storageBucket: "btcinvest-c0e25.firebasestorage.app",
-      messagingSenderId: "204937458487",
-      appId: "1:204937458487:web:cc27ece1249999279f60b2",
-      measurementId: "G-HG0Q8ZHT6G"
-    };
+  // 🔥 Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyDEQYPJFxQv8yFHptrTqoLHOn2L0PpgVhc",
+    authDomain: "btcinvest-c0e25.firebaseapp.com",
+    projectId: "btcinvest-c0e25",
+    storageBucket: "btcinvest-c0e25.firebasestorage.app",
+    messagingSenderId: "204937458487",
+    appId: "1:204937458487:web:cc27ece1249999279f60b2",
+    measurementId: "G-HG0Q8ZHT6G"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-    const walletBalanceEl = document.getElementById("walletBalance");
-    const walletWaveEl = document.getElementById("walletWave");
-    const userLevelEl = document.getElementById("userLevel");
+  const walletBalanceEl = document.getElementById("walletBalance");
+  const walletWaveEl = document.getElementById("walletWave");
+  const userLevelEl = document.getElementById("userLevel");
 
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        try {
-          const userRef = doc(db, "users", user.uid);
-          const userDoc = await getDoc(userRef);
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      try {
+        const userRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userRef);
 
-          if (userDoc.exists()) {
-            const data = userDoc.data();
+        if (userDoc.exists()) {
+          const data = userDoc.data();
 
-            // ✅ Wallet balance
-            const balance = data.walletBalance || 0;
-            walletBalanceEl.textContent = balance.toLocaleString();
+          // ✅ Wallet balance
+          const balance = data.walletBalance || 0;
+          walletBalanceEl.textContent = balance.toLocaleString();
 
-            // 🌊 Wave fill (max 40k = full)
-            let percent = Math.min((balance / 40000) * 100, 100);
-            walletWaveEl.style.top = (100 - percent) + "%";
+          // 🌊 Wave fill
+          let percent = Math.min((balance / 40000) * 100, 100);
+          walletWaveEl.style.top = (100 - percent) + "%";
 
-            // ✅ Lifetime deposit (loyalty level)
-            let lifetimeDeposit = data.lifetimeDeposit ?? 0;
+          // ✅ Lifetime deposit
+          let lifetimeDeposit = data.lifetimeDeposit ?? 0;
 
-            if (data.lifetimeDeposit === undefined) {
-              await updateDoc(userRef, { lifetimeDeposit: balance });
-              lifetimeDeposit = balance;
-            }
-
-            // 🎖️ Level system
-            let level = "No Level", cls = "";
-            if (lifetimeDeposit >= 5000 && lifetimeDeposit < 10000) {
-              level = "Bronze"; cls = "bronze";
-            }
-            else if (lifetimeDeposit >= 10000 && lifetimeDeposit < 20000) {
-              level = "Silver"; cls = "silver";
-            }
-            else if (lifetimeDeposit >= 20000 && lifetimeDeposit < 40000) {
-              level = "Gold"; cls = "gold";
-            }
-            else if (lifetimeDeposit >= 40000) {
-              level = "Diamond"; cls = "diamond";
-            }
-
-            // ✅ Always update UI
-            userLevelEl.textContent = level;
-            userLevelEl.className = "level-badge" + (cls ? " " + cls : "");
+          if (data.lifetimeDeposit === undefined) {
+            await updateDoc(userRef, { lifetimeDeposit: balance });
+            lifetimeDeposit = balance;
           }
-        } catch (err) {
-          console.error("Error fetching user data:", err);
-          userLevelEl.textContent = "No Level";
-          userLevelEl.className = "level-badge";
+
+          // 🎖️ Level system
+          let level = "No Level", cls = "";
+          if (lifetimeDeposit >= 5000 && lifetimeDeposit < 10000) {
+            level = "Bronze"; cls = "bronze";
+          } else if (lifetimeDeposit >= 10000 && lifetimeDeposit < 20000) {
+            level = "Silver"; cls = "silver";
+          } else if (lifetimeDeposit >= 20000 && lifetimeDeposit < 40000) {
+            level = "Gold"; cls = "gold";
+          } else if (lifetimeDeposit >= 40000) {
+            level = "Diamond"; cls = "diamond";
+          }
+
+          // ✅ Always update UI
+          userLevelEl.textContent = level;
+          userLevelEl.className = "level-badge" + (cls ? " " + cls : "");
         }
-      } else {
+      } catch (err) {
+        console.error("Error fetching user data:", err);
         userLevelEl.textContent = "No Level";
         userLevelEl.className = "level-badge";
       }
-    });
-  </script>
+    } else {
+      // ❌ User login nahi hai → redirect to auth.html
+      window.location.href = "auth.html";
+    }
+  });
+</script>
 
 </body>
 </html>
