@@ -1,0 +1,262 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deposit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 20px;
+      padding-bottom: 100px;
+      color: #333;
+    }
+    h1 { text-align: center; margin-bottom: 20px; color: #222; }
+    .dashboard {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .info-card {
+      margin-top: 20px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    .btn {
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .btn-deposit { background: #28a745; }
+    .btn-deposit:hover { background: #218838; }
+
+    /* ✅ Popup */
+    .popup-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none; justify-content: center; align-items: center;
+      z-index: 2000;
+    }
+    .popup {
+      background: #fff; border-radius: 16px; padding: 25px;
+      max-width: 400px; width: 90%; text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    .qr-code { margin: 15px auto; }
+    .address-box {
+      background: #f5f7fa; padding: 10px; border-radius: 10px;
+      font-size: 14px; word-break: break-all; margin-top: 10px;
+    }
+    .copy-btn { background: #28a745; color: #fff; margin-top: 15px; }
+    .close-btn { background: #dc3545; color: #fff; margin-top: 15px; margin-left: 10px; }
+
+    /* ✅ History Card Style */
+    .history-section { margin-top: 30px; }
+    .history-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      text-align: left;
+    }
+    .history-card .status {
+      font-weight: bold;
+      float: right;
+    }
+    .status.complete { color: green; }
+    .status.pending { color: #ff8800; }
+    .history-card .label { font-weight: 600; color: #444; }
+    .history-card .value { color: #ff8800; font-weight: bold; }
+    .history-card small { color: #666; display: block; margin-top: 3px; }
+
+    /* 🌊 Navbar */
+    .wave-nav {
+      position: fixed; bottom: 0; left: 0; width: 100%; height: 70px;
+      background: linear-gradient(135deg, #007bff, #00c6ff);
+      clip-path: polygon(0 20%, 15% 0, 85% 0, 100% 20%, 100% 100%, 0 100%);
+      display: flex; justify-content: space-around; align-items: center;
+      z-index: 1000; box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
+    }
+    .wave-nav a {
+      flex: 1; text-align: center; font-size: 13px; color: #fff;
+      text-decoration: none; font-weight: 600;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .wave-nav a.active { color: #ffeb3b; }
+    .wave-nav i { font-size: 22px; margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+
+  <h1>Deposit Funds</h1>
+
+  <div class="dashboard">
+    <div class="info-card">
+      <h2>💰 Make a Deposit</h2>
+      <p>Click below to get your <b>BEP20 deposit address</b> with QR code.</p>
+      <button class="btn btn-deposit" onclick="openPopup()">Get Deposit Address</button>
+    </div>
+
+    <!-- ✅ Deposit History -->
+    <div class="history-section" id="historySection">
+      <h2 style="color:#007bff; text-align:center;">📜 Deposit History</h2>
+      <div id="historyList">
+        <p style="text-align:center; color:#666;">Loading...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Popup -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup">
+      <h2>Deposit Address</h2>
+      <div id="qrcode" class="qr-code"></div>
+      <div class="address-box" id="depositAddress"></div>
+      <button class="copy-btn" onclick="copyAddress()">Copy Address</button>
+      <button class="close-btn" onclick="closePopup()">Close</button>
+    </div>
+  </div>
+
+  <!-- 🌊 Navbar -->
+  <div class="wave-nav">
+    <a href="dashboard.html">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="investment.html">
+      <i data-lucide="trending-up"></i>
+      <span>Invest</span>
+    </a>
+    <a href="account.html">
+      <i data-lucide="user"></i>
+      <span>Account</span>
+    </a>
+    
+  </div>
+
+  <!-- ✅ Libraries -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <script> lucide.createIcons(); </script>
+
+  <!-- ✅ Firebase Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDEQYPJFxQv8yFHptrTqoLHOn2L0PpgVhc",
+      authDomain: "btcinvest-c0e25.firebaseapp.com",
+      projectId: "btcinvest-c0e25",
+      storageBucket: "btcinvest-c0e25.firebasestorage.app",
+      messagingSenderId: "204937458487",
+      appId: "1:204937458487:web:cc27ece1249999279f60b2",
+      measurementId: "G-HG0Q8ZHT6G"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const popupOverlay = document.getElementById("popupOverlay");
+    const depositAddressEl = document.getElementById("depositAddress");
+    const qrCodeEl = document.getElementById("qrcode");
+    const historyList = document.getElementById("historyList");
+
+    let depositAddress = "0x1234567890abcdef1234567890abcdef12345678"; // ✅ apna BEP20 address
+    let currentUserId = null;
+
+    // ✅ Open popup + save deposit entry
+    window.openPopup = async function() {
+      popupOverlay.style.display = "flex";
+      depositAddressEl.textContent = depositAddress;
+      qrCodeEl.innerHTML = ""; // purana QR clear karo
+      new QRCode(qrCodeEl, { text: depositAddress, width: 180, height: 180 });
+
+      if (currentUserId) {
+        await addDoc(collection(db, "users", currentUserId, "deposits"), {
+          amount: 0,
+          address: depositAddress,
+          date: serverTimestamp(),
+          status: "Pending"
+        });
+        loadDepositHistory(currentUserId);
+      }
+    };
+
+    // ✅ Close popup
+    window.closePopup = function() {
+      popupOverlay.style.display = "none";
+      qrCodeEl.innerHTML = "";
+    };
+
+    // ✅ Copy address
+    window.copyAddress = function() {
+      navigator.clipboard.writeText(depositAddress);
+      alert("Address copied!");
+    };
+
+    // ✅ Load history as cards
+    async function loadDepositHistory(userId) {
+      historyList.innerHTML = "<p style='text-align:center; color:#666;'>Loading...</p>";
+
+      try {
+        const depositsRef = collection(db, "users", userId, "deposits");
+        const q = query(depositsRef, orderBy("date", "desc")); // latest first
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+          historyList.innerHTML = "<p style='text-align:center; color:#666;'>No deposits yet.</p>";
+          return;
+        }
+
+        historyList.innerHTML = "";
+        querySnapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          const dateStr = data.date ? new Date(data.date.seconds * 1000).toLocaleString() : "-";
+          const statusClass = (data.status || "Pending").toLowerCase();
+          const card = `
+            <div class="history-card">
+              <span class="status ${statusClass}">${data.status || "Pending"}</span>
+              <div><span class="label">Deposit</span></div>
+              <div><span class="label">Balance: </span> <span class="value">₹${data.amount || 0}</span></div>
+              <div><span class="label">Type: </span> BEP20</div>
+              <small>${dateStr}</small>
+              <small>Order ID: ${docSnap.id}</small>
+            </div>
+          `;
+          historyList.innerHTML += card;
+        });
+      } catch (err) {
+        console.error("Error loading history:", err);
+        historyList.innerHTML = "<p style='text-align:center; color:red;'>Error loading history</p>";
+      }
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "auth.html";
+      } else {
+        currentUserId = user.uid;
+        loadDepositHistory(user.uid);
+      }
+    });
+  </script>
+</body>
+</html>
