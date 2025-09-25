@@ -11,6 +11,7 @@
       background: #f5f7fa;
       margin: 0;
       padding: 20px;
+      padding-bottom: 100px; /* 👈 navbar ke liye space fix */
       color: #333;
     }
     h1 {
@@ -46,7 +47,7 @@
       left: 0;
       width: 200%;
       height: 200%;
-      background: rgba(40,167,69,0.7);
+      background: rgba(40,167,69,0.6); /* 👈 thoda light green */
       border-radius: 40%;
       animation: waveAnim 4s infinite linear;
       transform: translateX(-25%);
@@ -62,15 +63,16 @@
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      color: #fff;
+      color: #222; /* 👈 white ki jagah dark kiya */
       font-weight: bold;
       z-index: 2;
     }
     .wallet-text small {
       font-size: 12px;
+      display: block;
     }
     .wallet-text span {
-      font-size: 20px;
+      font-size: 22px;
       display: block;
     }
     /* 🎖️ Level Badge */
@@ -147,6 +149,39 @@
       padding-left: 20px;
       margin: 10px 0;
     }
+
+    /* 🌊 Wave Bottom Navbar */
+    .wave-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: linear-gradient(135deg, #007bff, #00c6ff);
+      clip-path: polygon(0 20%, 15% 0, 85% 0, 100% 20%, 100% 100%, 0 100%);
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      padding-bottom: 10px;
+      z-index: 1000;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
+    }
+    .wave-nav a {
+      flex: 1;
+      text-align: center;
+      font-size: 13px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .wave-nav a:hover { opacity: 0.85; }
+    .wave-nav a.active { color: #ffeb3b; }
+    .wave-nav i {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
   </style>
 </head>
 <body>
@@ -166,8 +201,8 @@
 
     <!-- ✅ Buttons -->
     <div class="action-row">
-      <button class="btn btn-deposit" onclick="window.location.href='deposit.html'"> Deposit</button>
-      <button class="btn btn-withdrawal" onclick="window.location.href='withdrawal.html'"> Withdraw</button>
+      <button class="btn btn-deposit" onclick="window.location.href='deposit.html'">Deposit</button>
+      <button class="btn btn-withdrawal" onclick="window.location.href='withdrawal.html'">Withdraw</button>
     </div>
 
     <!-- 📈 Investment -->
@@ -178,14 +213,12 @@
       <h2>ℹ️ Investment Information</h2>
       <p><b>Daily Return:</b> You will earn <span style="color:#28a745;">0.5% per day</span> on your invested balance.</p>
       <p><b>Levels:</b> Your level is based on <span style="color:#007bff;">lifetime deposits</span>. Once you unlock a level, it stays forever.</p>
-      <div class="info-card">
-        <ul>
-          <li>🥉 <b>Bronze:</b> $5,000 – $9,999 lifetime deposit</li>
-          <li>🥈 <b>Silver:</b> $10,000 – $19,999 lifetime deposit</li>
-          <li>🥇 <b>Gold:</b> $20,000 – $39,999 lifetime deposit</li>
-          <li>💎 <b>Diamond:</b> $40,000+ lifetime deposit</li>
-        </ul>
-      </div>
+      <ul>
+        <li>🥉 <b>Bronze:</b> $5,000 – $9,999 lifetime deposit</li>
+        <li>🥈 <b>Silver:</b> $10,000 – $19,999 lifetime deposit</li>
+        <li>🥇 <b>Gold:</b> $20,000 – $39,999 lifetime deposit</li>
+        <li>💎 <b>Diamond:</b> $40,000+ lifetime deposit</li>
+      </ul>
       <p><b>Withdrawals:</b> You can withdraw anytime. Requests are processed within <span style="color:#dc3545;">24 hours</span>.</p>
       <p><b>Example:</b> If you deposit $10,000, your level will be <b>Silver</b> and you’ll earn $50 every day.</p>
       <p style="margin-top:20px; font-weight:bold; text-align:center; color:#555;">
@@ -193,150 +226,89 @@
       </p>
     </div>
   </div>
-<!-- ✅ Lucide Icons CDN -->
-<script src="https://unpkg.com/lucide@latest"></script>
 
-<style>
-  /* 🌊 Wave Bottom Navbar */
-  .wave-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    background: linear-gradient(135deg, #007bff, #00c6ff);
-    clip-path: polygon(0 20%, 15% 0, 85% 0, 100% 20%, 100% 100%, 0 100%);
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-    padding-bottom: 10px;
-    z-index: 1000;
-    box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
-  }
-  .wave-nav a {
-    flex: 1;
-    text-align: center;
-    font-size: 13px;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s;
-  }
-  .wave-nav a:hover {
-    opacity: 0.85;
-  }
-  .wave-nav a.active {
-    color: #ffeb3b;
-  }
-  .wave-nav i {
-    display: block;
-    font-size: 22px;
-    margin-bottom: 4px;
-  }
+  <!-- 🌊 Wave Bottom Navigation -->
+  <div class="wave-nav">
+    <a href="dashboard.html" class="active">
+      <i data-lucide="home"></i>
+      Home
+    </a>
+    <a href="investment.html">
+      <i data-lucide="trending-up"></i>
+      Invest
+    </a>
+    <a href="account.html">
+      <i data-lucide="user"></i>
+      Account
+    </a>
+  </div>
 
-  /* 👇 Body me jagah */
-  body {
-    padding-bottom: 80px; /* navbar ke liye space */
-  }
-</style>
+  <!-- ✅ Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script> lucide.createIcons(); </script>
 
-<!-- 🌊 Wave Bottom Navigation -->
-<div class="wave-nav">
-  <a href="dashboard.html" class="active">
-    <i data-lucide="home"></i>
-    Home
-  </a>
-  <a href="investment.html">
-    <i data-lucide="trending-up"></i>
-    Invest
-  </a>
-  <a href="account.html">
-    <i data-lucide="user"></i>
-    Account
-  </a>
-</div>
-
-<script>
-  // ✅ Render Lucide Icons
-  lucide.createIcons();
-</script>
-
+  <!-- ✅ Firebase Logic -->
   <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-  import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-  // 🔥 Firebase Config
-  const firebaseConfig = {
-    apiKey: "AIzaSyDEQYPJFxQv8yFHptrTqoLHOn2L0PpgVhc",
-    authDomain: "btcinvest-c0e25.firebaseapp.com",
-    projectId: "btcinvest-c0e25",
-    storageBucket: "btcinvest-c0e25.firebasestorage.app",
-    messagingSenderId: "204937458487",
-    appId: "1:204937458487:web:cc27ece1249999279f60b2",
-    measurementId: "G-HG0Q8ZHT6G"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyDEQYPJFxQv8yFHptrTqoLHOn2L0PpgVhc",
+      authDomain: "btcinvest-c0e25.firebaseapp.com",
+      projectId: "btcinvest-c0e25",
+      storageBucket: "btcinvest-c0e25.firebasestorage.app",
+      messagingSenderId: "204937458487",
+      appId: "1:204937458487:web:cc27ece1249999279f60b2",
+      measurementId: "G-HG0Q8ZHT6G"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-  const walletBalanceEl = document.getElementById("walletBalance");
-  const walletWaveEl = document.getElementById("walletWave");
-  const userLevelEl = document.getElementById("userLevel");
+    const walletBalanceEl = document.getElementById("walletBalance");
+    const walletWaveEl = document.getElementById("walletWave");
+    const userLevelEl = document.getElementById("userLevel");
 
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      try {
-        const userRef = doc(db, "users", user.uid);
-        const userDoc = await getDoc(userRef);
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const userRef = doc(db, "users", user.uid);
+          const userDoc = await getDoc(userRef);
 
-        if (userDoc.exists()) {
-          const data = userDoc.data();
+          if (userDoc.exists()) {
+            const data = userDoc.data();
+            const balance = data.walletBalance || 0;
+            walletBalanceEl.textContent = balance.toLocaleString();
 
-          // ✅ Wallet balance
-          const balance = data.walletBalance || 0;
-          walletBalanceEl.textContent = balance.toLocaleString();
+            let percent = Math.min((balance / 40000) * 100, 100);
+            walletWaveEl.style.top = (100 - percent) + "%";
 
-          // 🌊 Wave fill
-          let percent = Math.min((balance / 40000) * 100, 100);
-          walletWaveEl.style.top = (100 - percent) + "%";
+            let lifetimeDeposit = data.lifetimeDeposit ?? 0;
+            if (data.lifetimeDeposit === undefined) {
+              await updateDoc(userRef, { lifetimeDeposit: balance });
+              lifetimeDeposit = balance;
+            }
 
-          // ✅ Lifetime deposit
-          let lifetimeDeposit = data.lifetimeDeposit ?? 0;
+            let level = "No Level", cls = "";
+            if (lifetimeDeposit >= 5000 && lifetimeDeposit < 10000) { level = "Bronze"; cls = "bronze"; }
+            else if (lifetimeDeposit >= 10000 && lifetimeDeposit < 20000) { level = "Silver"; cls = "silver"; }
+            else if (lifetimeDeposit >= 20000 && lifetimeDeposit < 40000) { level = "Gold"; cls = "gold"; }
+            else if (lifetimeDeposit >= 40000) { level = "Diamond"; cls = "diamond"; }
 
-          if (data.lifetimeDeposit === undefined) {
-            await updateDoc(userRef, { lifetimeDeposit: balance });
-            lifetimeDeposit = balance;
+            userLevelEl.textContent = level;
+            userLevelEl.className = "level-badge" + (cls ? " " + cls : "");
           }
-
-          // 🎖️ Level system
-          let level = "No Level", cls = "";
-          if (lifetimeDeposit >= 5000 && lifetimeDeposit < 10000) {
-            level = "Bronze"; cls = "bronze";
-          } else if (lifetimeDeposit >= 10000 && lifetimeDeposit < 20000) {
-            level = "Silver"; cls = "silver";
-          } else if (lifetimeDeposit >= 20000 && lifetimeDeposit < 40000) {
-            level = "Gold"; cls = "gold";
-          } else if (lifetimeDeposit >= 40000) {
-            level = "Diamond"; cls = "diamond";
-          }
-
-          // ✅ Always update UI
-          userLevelEl.textContent = level;
-          userLevelEl.className = "level-badge" + (cls ? " " + cls : "");
+        } catch (err) {
+          console.error("Error fetching user data:", err);
+          userLevelEl.textContent = "No Level";
+          userLevelEl.className = "level-badge";
         }
-      } catch (err) {
-        console.error("Error fetching user data:", err);
-        userLevelEl.textContent = "No Level";
-        userLevelEl.className = "level-badge";
+      } else {
+        window.location.href = "auth.html";
       }
-    } else {
-      // ❌ User login nahi hai → redirect to auth.html
-      window.location.href = "auth.html";
-    }
-  });
-</script>
-
+    });
+  </script>
 </body>
 </html>
