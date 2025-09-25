@@ -1,0 +1,238 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Register/ Trustdollar / with - very Safe your fund //////</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      margin:0;
+    }
+    .header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      text-align: center;
+      padding: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      background: linear-gradient(90deg,#4CAF50,#2c7);
+      color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+    .wrapper {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-height: calc(100vh - 70px);
+      overflow-y: auto;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .container {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      width: 380px;
+      max-width: 95%;
+      text-align:center;
+    }
+    h2 { margin:0 0 12px 0; font-size:22px; font-weight:bold; }
+    input {
+      width: 100%; padding: 10px; margin: 8px 0;
+      border-radius: 5px; border: 1px solid #ccc;
+      box-sizing: border-box; font-size:14px;
+    }
+    .password-container { position: relative; }
+    .password-container i {
+      position: absolute; right: 10px; top: 50%;
+      transform: translateY(-50%); cursor: pointer; font-size:16px;
+    }
+    button {
+      width: 100%; padding: 10px; margin-top: 10px;
+      border: none; border-radius: 5px;
+      background: #4CAF50; color: white;
+      font-size: 16px; font-weight:bold;
+      cursor: pointer; display:flex; align-items:center; justify-content:center;
+      gap:8px; transition: background 0.3s;
+    }
+    button:hover { background:#3a9440; }
+    .popup {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff; padding: 15px 25px;
+      border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      display: none; z-index: 2000; font-size: 15px;
+    }
+    .popup.success { border-left: 5px solid green; }
+    .popup.error { border-left: 5px solid red; }
+
+  .login-box {
+  margin-top: 14px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f9f9f9;
+  font-size: 14px;
+  color: #333;
+}
+.login-box a {
+  color: #0066ff;
+  font-weight: bold;
+  text-decoration: none;
+}
+.login-box a:hover {
+  text-decoration: underline;
+}
+
+  </style>
+</head>
+<body>
+  <div class="header">𝐒𝐞𝐜𝐮𝐫𝐞 𝐘𝐨𝐮𝐫 𝐅𝐮𝐧𝐝𝐬 𝐰𝐢𝐭𝐡 𝐒𝐚𝐟𝐞</div>
+  <div class="wrapper">
+    <div class="container">
+      <h2>Register</h2>
+      <input type="text" id="name" placeholder="Name">
+      <input type="text" id="register-email" placeholder="Email">
+      <input type="text" id="username" placeholder="Username">
+      <input type="text" id="mobile" placeholder="Mobile Number">
+      <input type="text" id="aadhaar" placeholder="Aadhaar">
+      <input type="text" id="cheque" placeholder="Upline Cheque (Optional)">
+      <div class="password-container">
+        <input type="password" id="password" placeholder="Password">
+        <i id="toggle-password">👁️</i>
+      </div>
+      <div class="password-container">
+        <input type="password" id="confirm-password" placeholder="Confirm Password">
+        <i id="toggle-confirm-password">👁️</i>
+      </div>
+      <input type="text" id="referral" placeholder="Referral Code (Optional)">
+
+      <button id="registerBtn">Register</button>
+
+      <!-- ✅ Login redirect box -->
+      <div class="login-box">
+        Already have an account? 
+        <a href="login.html">Login here</a>
+      </div>
+
+  </div>
+  <div id="popup" class="popup"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+import { getFirestore, collection, doc, setDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDEQYPJFxQv8yFHptrTqoLHOn2L0PpgVhc",
+  authDomain: "btcinvest-c0e25.firebaseapp.com",
+  projectId: "btcinvest-c0e25",
+  storageBucket: "btcinvest-c0e25.firebasestorage.app",
+  messagingSenderId: "204937458487",
+  appId: "1:204937458487:web:cc27ece1249999279f60b2",
+  measurementId: "G-HG0Q8ZHT6G"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const popup = document.getElementById('popup');
+function showPopup(msg, type='success'){
+  popup.textContent = msg;
+  popup.className = `popup ${type}`;
+  popup.style.display = 'block';
+  setTimeout(()=>{ popup.style.display='none'; },2000);
+}
+
+// password toggle
+document.getElementById("toggle-password").addEventListener("click", ()=>{
+  const pass = document.getElementById("password");
+  pass.type = pass.type === "password" ? "text" : "password";
+});
+document.getElementById("toggle-confirm-password").addEventListener("click", ()=>{
+  const pass = document.getElementById("confirm-password");
+  pass.type = pass.type === "password" ? "text" : "password";
+});
+
+function validateEmail(email){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+
+document.getElementById("registerBtn").addEventListener("click", async ()=>{
+  const name = document.getElementById("name").value.trim();
+  const regEmail = document.getElementById("register-email").value.trim();
+  const username = document.getElementById("username").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const aadhaar = document.getElementById("aadhaar").value.trim();
+  const cheque = document.getElementById("cheque").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const confirmPassword = document.getElementById("confirm-password").value.trim();
+  const referral = document.getElementById("referral").value.trim();
+
+  try {
+    if(!name || !regEmail || !username || !mobile || !aadhaar || !password || !confirmPassword){
+      showPopup("Please complete all required","error"); return;
+    }
+    if(!validateEmail(regEmail)){ showPopup("Invalid Email","error"); return; }
+    if(password !== confirmPassword){ showPopup("Passwords do not match","error"); return; }
+    if(password.length < 6){ showPopup("Password min 6 chars","error"); return; }
+    if(!/^\d{10}$/.test(mobile)){ showPopup("Mobile must be 10 digits","error"); return; }
+    if(!/^[a-zA-Z0-9]{3,}$/.test(username)){ showPopup("Username min 3 chars","error"); return; }
+    if(!/^\d{12}$/.test(aadhaar)){ showPopup("Aadhaar must be 12 digits","error"); return; }
+    if(cheque !== "" && !/^\d{6,20}$/.test(cheque)){ showPopup("Cheque No. must be 6-20 digits","error"); return; }
+
+    // check duplicates
+    const usersRef = collection(db, "users");
+    const checks = [
+      { field: "email", value: regEmail, msg: "Email already registered" },
+      { field: "mobile", value: mobile, msg: "Mobile already registered" },
+      { field: "username", value: username, msg: "Username already taken" },
+      { field: "name", value: name, msg: "Name already registered" }
+    ];
+    for(const c of checks){
+      const q = query(usersRef, where(c.field, "==", c.value));
+      const snap = await getDocs(q);
+      if(!snap.empty){ showPopup(c.msg,"error"); return; }
+    }
+
+    const userCredential = await createUserWithEmailAndPassword(auth, regEmail, password);
+    const user = userCredential.user;
+    const finalReferral = referral !== "" ? referral : ("REF" + Math.floor(Math.random()*900000+100000));
+
+    await setDoc(doc(db, "users", user.uid), {
+      name, email: regEmail, username, mobile, aadhaar,
+      chequeNumber: cheque !== "" ? cheque : null,
+      referralCode: finalReferral,
+      referredBy: referral !== "" ? referral : null,
+      walletBalance: 0,   // ✅
+      totalInvested: 0,   // ✅
+      createdAt: new Date().toISOString()
+    });
+
+    showPopup("Registration Successful!");
+    setTimeout(()=>{ window.location.href = "index.html"; },1000);
+  } catch(err){
+    showPopup(err.message,"error");
+  }
+});
+// ✅ Auto set referral from URL if present
+const urlParams = new URLSearchParams(window.location.search);
+const refFromLink = urlParams.get("ref");
+const referralInput = document.getElementById("referral");
+
+if(refFromLink){
+  referralInput.value = refFromLink;
+  referralInput.readOnly = true; // user edit nahi kar sakta
+}
+
+</script>
+</body>
+</html>
