@@ -123,26 +123,26 @@
     .hero-buttons a.register:hover { background: #e68900; }
 
 
-       /* FEATURES */
-.features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-  padding: 50px 20px;
-}
+    /* FEATURES */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      padding: 50px 20px;
+    }
 
-.feature {
-  background: #fff;
-  border-radius: 16px;
-  padding: 28px 22px;
-  width: 280px;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
+    .feature {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 22px;
+      width: 280px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
 /* ✅ Gradient border effect */
 .feature::before {
@@ -179,54 +179,54 @@
   box-shadow: 0 12px 28px rgba(76,175,80,0.25);
 }
 
-    /* BLOCKCHAIN */
-    .blockchain-section {
-      text-align: center;
-      padding: 50px 15px;
-      background: #eef9f1;
-    }
-    .blockchain {
-      display: flex; justify-content: center; align-items: center; gap: 15px;
-      flex-wrap: wrap;
-    }
-    .block {
-      width: 90px; height: 90px; background: #fff;
-      border: 2px solid #2c7; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: bold;
-      animation: pulse 3s infinite;
-    }
-    .chain {
-      width: 40px; height: 3px;
-      background: linear-gradient(90deg,#2c7,#4CAF50);
-      position: relative; overflow: hidden;
-    }
-    .chain::before {
-      content: ""; position: absolute; left: -40px; top: 0;
-      height: 100%; width: 40px;
-      background: rgba(255,255,255,0.8);
-      animation: flow 2s linear infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    @keyframes flow {
-      0% { left: -40px; }
-      100% { left: 40px; }
-    }
+/* BLOCKCHAIN */
+.blockchain-section {
+  text-align: center;
+  padding: 50px 15px;
+  background: #eef9f1;
+}
+.blockchain {
+  display: flex; justify-content: center; align-items: center; gap: 15px;
+  flex-wrap: wrap;
+}
+.block {
+  width: 90px; height: 90px; background: #fff;
+  border: 2px solid #2c7; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: bold;
+  animation: pulse 3s infinite;
+}
+.chain {
+  width: 40px; height: 3px;
+  background: linear-gradient(90deg,#2c7,#4CAF50);
+  position: relative; overflow: hidden;
+}
+.chain::before {
+  content: ""; position: absolute; left: -40px; top: 0;
+  height: 100%; width: 40px;
+  background: rgba(255,255,255,0.8);
+  animation: flow 2s linear infinite;
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+@keyframes flow {
+  0% { left: -40px; }
+  100% { left: 40px; }
+}
 
-    /* FOOTER */
-    .footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 13px;
-      background: #2c7;
-      color: #fff;
-      margin-top: 40px;
-    }
-  </style>
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+  background: #2c7;
+  color: #fff;
+  margin-top: 40px;
+}
+</style>
 </head>
 <body>
 
@@ -248,7 +248,7 @@
 
     <h1>Secure Your Funds with TrustDollar V2</h1>
     <p>Blockchain-powered platform designed to keep your investments safe and transparent. 
-       Start today and earn referral income up to 3 levels.</p>
+    Start today and earn referral income up to 3 levels.</p>
 
     <!-- ✅ Buttons directly under hero -->
     <div class="hero-buttons">
@@ -288,9 +288,114 @@
   </div>
 
   <!-- FOOTER -->
-  <div class="footer">
-    © 2025 TrustDollar v2 | All Rights Reserved
-  </div>
+  <footer class="footer">
+    <div class="footer-container">
 
+      <!-- Left: Logo + About -->
+      <div class="footer-col about">
+        <h2>TrustDollar <span class="small">V2</span></h2>
+        <p>TrustDollar is a BTC Mining & Staking platform. 
+        Earn 1% daily and referral income up to 3 levels.</p>
+      </div>
+
+      <!-- Middle: Resources + Company (side by side) -->
+      <div class="footer-col links">
+        <div class="link-group">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="#">Docs</a></li>
+            <li><a href="#">How to Buy</a></li>
+            <li><a href="#">Tutorials</a></li>
+            <li><a href="#">Invite Friends</a></li>
+          </ul>
+        </div>
+        <div class="link-group">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="#">About Us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="footer-col">
+        <h3>Stay Updated</h3>
+        <p>Subscribe for updates, news & earning tips.</p>
+        <form class="subscribe-form">
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      © 2025 TrustDollar V2 | All Rights Reserved
+    </div>
+  </footer>
+
+  <style>
+    .footer {
+      background: #e8f5e9;   /* ✅ light green theme */
+      color: #333;
+      padding: 50px 20px 20px;
+    }
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    .footer h2, .footer h3 {
+      margin-bottom: 12px;
+      color: #2c7;
+    }
+    .footer p { font-size: 14px; line-height: 1.6; }
+    .footer ul { list-style: none; padding: 0; }
+    .footer ul li { margin: 6px 0; }
+    .footer ul li a {
+      color: #444; text-decoration: none; font-size: 14px;
+    }
+    .footer ul li a:hover { color: #2c7; font-weight: 600; }
+
+    /* ✅ Side by side for Resources + Company */
+    .links {
+      display: flex;
+      gap: 40px;
+      justify-content: flex-start;
+    }
+    .link-group { flex: 1; }
+
+    /* Subscribe form */
+    .subscribe-form {
+      display: flex; margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px; overflow: hidden;
+    }
+    .subscribe-form input {
+      flex: 1; padding: 10px; border: none; outline: none;
+      font-size: 14px; background: #fff; color: #333;
+    }
+    .subscribe-form button {
+      background: linear-gradient(90deg,#4CAF50,#2c7);
+      color: #fff; border: none; padding: 10px 16px;
+      cursor: pointer; font-weight: bold;
+    }
+    .subscribe-form button:hover { opacity: 0.9; }
+
+    /* Bottom bar */
+    .footer-bottom {
+      text-align: center;
+      border-top: 1px solid #ccc;
+      padding-top: 15px;
+      font-size: 13px;
+      margin-top: 30px;
+      color: #444;
+    }
+  </style>
 </body>
 </html>
