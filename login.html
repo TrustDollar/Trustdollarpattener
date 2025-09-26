@@ -20,6 +20,19 @@
       color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);
       z-index: 1000; letter-spacing: 0.5px;
     }
+    
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;   /* ✅ Left-right scroll band */
+      width: 100%;
+    }
+
+    .wrapper, .container, .info-box {
+      max-width: 100%;     
+      box-sizing: border-box;
+    }
 
     .wrapper {
       display: flex;
@@ -33,14 +46,14 @@
     }
     
     .tagline {
-  margin: 85px 0 20px 0;   /* pehle 65px tha, maine 85px kiya */
-  font-size: 15px; 
-  color: #222;
-  text-align: center; 
-  font-weight: 600;
-}
+      margin: 85px 0 20px 0;   /* pehle 65px tha, maine 85px kiya */
+      font-size: 15px; 
+      color: #222;
+      text-align: center; 
+      font-weight: 600;
+    }
 
-   .container {
+    .container {
       background: #fff; padding: 20px 30px;
       border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.2);
       width: 100%;          /* ✅ responsive */
@@ -311,17 +324,17 @@
 
 <script>
 // ✅ Jab bhi input focus ho, usko visible karo
-const inputs = document.querySelectorAll("input");
-inputs.forEach(input => {
-  input.addEventListener("focus", () => {
-    setTimeout(() => {
-      input.scrollIntoView({
-        behavior: "smooth",
+  const inputs = document.querySelectorAll("input");
+  inputs.forEach(input => {
+    input.addEventListener("focus", () => {
+      setTimeout(() => {
+        input.scrollIntoView({
+          behavior: "smooth",
         block: "nearest"   // 👈 sirf ye use karna
       });
-    }, 300);
+      }, 300);
+    });
   });
-});
 
 </script>
 
