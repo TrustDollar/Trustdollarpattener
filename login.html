@@ -31,16 +31,16 @@
       padding-bottom: 80px;  /* ✅ extra safe space */
       box-sizing: border-box;
     }
-
-
-
+    
     .tagline {
-      margin: 65px 0 15px 0;
-      font-size: 15px; color: #222;
-      text-align: center; font-weight: 600;
-    }
+  margin: 85px 0 20px 0;   /* pehle 65px tha, maine 85px kiya */
+  font-size: 15px; 
+  color: #222;
+  text-align: center; 
+  font-weight: 600;
+}
 
-    .container {
+   .container {
       background: #fff; padding: 20px 30px;
       border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.2);
       width: 100%;          /* ✅ responsive */
@@ -311,14 +311,18 @@
 
 <script>
 // ✅ Jab bhi input focus ho, usko visible karo
-  const inputs = document.querySelectorAll("input");
-  inputs.forEach(input => {
-    input.addEventListener("focus", () => {
-      setTimeout(() => {
-        input.scrollIntoView({ behavior: "smooth", block: "center" });
-      }, 300);
-    });
+const inputs = document.querySelectorAll("input");
+inputs.forEach(input => {
+  input.addEventListener("focus", () => {
+    setTimeout(() => {
+      input.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"   // 👈 sirf ye use karna
+      });
+    }, 300);
   });
+});
+
 </script>
 
 </body>
