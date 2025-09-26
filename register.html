@@ -31,8 +31,10 @@
       width: 100%;
       margin-top: 70px; /* header ke neeche space */
       padding: 15px;
+      padding-bottom: 80px;  /* ✅ extra safe space */
       box-sizing: border-box;
     }
+
 
     
     .container {
@@ -306,29 +308,41 @@ if(refFromLink){
 </script>
 <script>
 // ❌ Right-click disable
-document.addEventListener("contextmenu", function(e) {
-  e.preventDefault();
-  
-});
+  document.addEventListener("contextmenu", function(e) {
+    e.preventDefault();
+    
+  });
 
 // ❌ Disable text selection
-document.addEventListener("selectstart", function(e) {
-  e.preventDefault();
-});
+  document.addEventListener("selectstart", function(e) {
+    e.preventDefault();
+  });
 
 // ❌ Disable copy (Ctrl+C), cut (Ctrl+X), paste (Ctrl+V), view-source (Ctrl+U)
-document.addEventListener("keydown", function(e) {
-  if (
-    (e.ctrlKey && (e.key === "c" || e.key === "C")) || 
-    (e.ctrlKey && (e.key === "x" || e.key === "X")) || 
-    (e.ctrlKey && (e.key === "v" || e.key === "V")) || 
-    (e.ctrlKey && (e.key === "u" || e.key === "U")) || 
+  document.addEventListener("keydown", function(e) {
+    if (
+      (e.ctrlKey && (e.key === "c" || e.key === "C")) || 
+      (e.ctrlKey && (e.key === "x" || e.key === "X")) || 
+      (e.ctrlKey && (e.key === "v" || e.key === "V")) || 
+      (e.ctrlKey && (e.key === "u" || e.key === "U")) || 
     (e.key === "F12") // DevTools
-  ) {
-    e.preventDefault();
-   
+    ) {
+      e.preventDefault();
+    
   }
 });
+</script>
+
+<script>
+// ✅ Jab bhi input focus ho, usko visible karo
+  const inputs = document.querySelectorAll("input");
+  inputs.forEach(input => {
+    input.addEventListener("focus", () => {
+      setTimeout(() => {
+        input.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 300);
+    });
+  });
 </script>
 
 </body>
