@@ -319,83 +319,174 @@
         </div>
       </div>
 
-      <!-- Newsletter -->
-      <div class="footer-col">
-        <h3>Stay Updated</h3>
-        <p>Subscribe for updates, news & earning tips.</p>
-        <form class="subscribe-form">
-          <input type="email" placeholder="Enter your email" required>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+       <!-- Newsletter -->
+<div class="footer-col">
+  <h3>Stay Updated</h3>
+  <p>Subscribe for updates, news & earning tips.</p>
 
-    </div>
+  <form id="subscribeForm" class="subscribe-form">
+    <input type="email" name="email" placeholder="Enter your email" required>
+    <button type="submit">Submit</button>
+  </form>
+</div>
 
-    <!-- Bottom Bar -->
-    <div class="footer-bottom">
-      © 2025 TrustDollar V2 | All Rights Reserved
-    </div>
-  </footer>
+<!-- ✅ Hidden Popup -->
+<div id="successPopup" class="popup">
+  ✅ Submit Successfully! Thank you for subscribing.
+</div>
 
-  <style>
-    .footer {
-      background: #e8f5e9;   /* ✅ light green theme */
-      color: #333;
-      padding: 50px 20px 20px;
-    }
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-      gap: 30px;
-      max-width: 1100px;
-      margin: auto;
-    }
-    .footer h2, .footer h3 {
-      margin-bottom: 12px;
-      color: #2c7;
-    }
-    .footer p { font-size: 14px; line-height: 1.6; }
-    .footer ul { list-style: none; padding: 0; }
-    .footer ul li { margin: 6px 0; }
-    .footer ul li a {
-      color: #444; text-decoration: none; font-size: 14px;
-    }
-    .footer ul li a:hover { color: #2c7; font-weight: 600; }
+<style>
+/* Popup Style */
+.popup {
+  display: none; 
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: #4CAF50;
+  color: #fff;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  z-index: 2000;
+  animation: fadeIn 0.4s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+</style>
 
-    /* ✅ Side by side for Resources + Company */
-    .links {
-      display: flex;
-      gap: 40px;
-      justify-content: flex-start;
-    }
-    .link-group { flex: 1; }
+<script>
+document.getElementById("subscribeForm").addEventListener("submit", function(e){
+  e.preventDefault(); // 🚫 default redirect band
 
-    /* Subscribe form */
-    .subscribe-form {
-      display: flex; margin-top: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px; overflow: hidden;
-    }
-    .subscribe-form input {
-      flex: 1; padding: 10px; border: none; outline: none;
-      font-size: 14px; background: #fff; color: #333;
-    }
-    .subscribe-form button {
-      background: linear-gradient(90deg,#4CAF50,#2c7);
-      color: #fff; border: none; padding: 10px 16px;
-      cursor: pointer; font-weight: bold;
-    }
-    .subscribe-form button:hover { opacity: 0.9; }
+  const formData = new FormData(this);
 
-    /* Bottom bar */
-    .footer-bottom {
-      text-align: center;
-      border-top: 1px solid #ccc;
-      padding-top: 15px;
-      font-size: 13px;
-      margin-top: 30px;
-      color: #444;
+  fetch("https://formsubmit.co/trustdollarteam@gmail.com", {
+    method: "POST",
+    body: formData
+  })
+  .then(response => {
+    if(response.ok){
+      showPopup();  // ✅ popup call
+      this.reset(); // form clear
+    } else {
+      alert("❌ Something went wrong, try again!");
     }
-  </style>
+  })
+  .catch(error => {
+    alert("⚠ Error: " + error.message);
+  });
+});
+
+function showPopup(){
+  const popup = document.getElementById("successPopup");
+  popup.style.display = "block";
+
+  // 3 sec baad hide ho jaye
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 3000);
+}
+</script>
+
+
+<!-- Bottom Bar -->
+<div class="footer-bottom">
+  © 2025 TrustDollar V2 | All Rights Reserved
+</div>
+</footer>
+
+<style>
+  .footer {
+    background: #e8f5e9;   /* ✅ light green theme */
+    color: #333;
+    padding: 50px 20px 20px;
+  }
+  .footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+    gap: 30px;
+    max-width: 1100px;
+    margin: auto;
+  }
+  .footer h2, .footer h3 {
+    margin-bottom: 12px;
+    color: #2c7;
+  }
+  .footer p { font-size: 14px; line-height: 1.6; }
+  .footer ul { list-style: none; padding: 0; }
+  .footer ul li { margin: 6px 0; }
+  .footer ul li a {
+    color: #444; text-decoration: none; font-size: 14px;
+  }
+  .footer ul li a:hover { color: #2c7; font-weight: 600; }
+
+  /* ✅ Side by side for Resources + Company */
+  .links {
+    display: flex;
+    gap: 40px;
+    justify-content: flex-start;
+  }
+  .link-group { flex: 1; }
+
+  /* Subscribe form */
+  .subscribe-form {
+    display: flex; margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px; overflow: hidden;
+  }
+  .subscribe-form input {
+    flex: 1; padding: 10px; border: none; outline: none;
+    font-size: 14px; background: #fff; color: #333;
+  }
+  .subscribe-form button {
+    background: linear-gradient(90deg,#4CAF50,#2c7);
+    color: #fff; border: none; padding: 10px 16px;
+    cursor: pointer; font-weight: bold;
+  }
+  .subscribe-form button:hover { opacity: 0.9; }
+
+  /* Bottom bar */
+  .footer-bottom {
+    text-align: center;
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
+    font-size: 13px;
+    margin-top: 30px;
+    color: #444;
+  }
+</style>
+
+<script>
+// Get referral from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const referral = urlParams.get("ref");
+
+// Login & Register buttons
+  const loginBtn = document.querySelector(".login");
+  const registerBtn = document.querySelector(".register");
+
+  if (referral) {
+  // Referral mila hai ✅
+    console.log("Referral detected: " + referral);
+
+  // Login disable
+    loginBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      alert("⚠ You came via referral. Please Register first.");
+    });
+
+  // Register button → referral code chipak jaye
+    registerBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.location.href = `register.html?ref=${referral}`;
+    });
+  }
+</script>
+
+
 </body>
 </html>
