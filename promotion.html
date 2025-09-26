@@ -45,15 +45,69 @@
     .history-item .today { color: green; font-weight: bold; }
 
     /* Navbar */
-    nav { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; background: #ffffff; border-top: 1px solid #e5e7eb; box-shadow: 0 -3px 8px rgba(0,0,0,0.1); z-index: 1000; height: 58px; }
-    nav a { flex: 1; text-decoration: none; color: #6b7280; font-weight: 600; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 13px; position: relative; transition: all 0.3s; }
-    nav a span { width: 18px; height: 18px; display: inline-block; }
-    nav a:hover, nav a.active { color: #4f46e5; transform: translateY(-2px); }
-    nav a.active::before { content: ""; position: absolute; bottom: 0; left: 30%; width: 40%; height: 3px; background: #4f46e5; border-radius: 2px; }
-    .home { border:2px solid #06b6d4; transform:rotate(45deg); }
-    .invest { border:2px solid #2563eb; border-radius:6px; }
-    .promotion { border:2px solid #16a34a; border-radius:50%; }
-    .account { border:2px solid #f59e0b; border-radius:50% 50% 50% 0; }
+      nav {
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+  background:#fff;
+  border-top:1px solid #e5e7eb;
+  box-shadow:0 -2px 6px rgba(0,0,0,0.1);
+  z-index:1000;
+  height:55px; /* navbar की height छोटी की */
+}
+nav a {
+  flex:1;
+  text-decoration:none;
+  color:#333;
+  font-weight:500;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  font-size:12px;   /* छोटा font */
+  position:relative;
+}
+nav a span {
+  width:16px;
+  height:16px;
+  display:inline-block;
+}
+/* Hover + Active */
+nav a:hover,
+nav a.active {
+  color:#4f46e5;
+}
+nav a.active::before {
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:30%;
+  width:40%;
+  height:2px;
+  background:#4f46e5;
+  border-radius:2px;
+}
+/* Shapes */
+.home { border:2px solid #06b6d4; transform:rotate(45deg); }
+.invest { border:2px solid #2563eb; border-radius:4px; }
+.promotion { border:2px solid #16a34a; border-radius:50%; }
+.account { border:2px solid #f59e0b; border-radius:50% 50% 50% 0; }
+
+/* Vertical Divider (slim line, bigger) */
+nav a:not(:last-child)::after {
+  content:"";
+  position:absolute;
+  right:0;
+  top:20%;
+  bottom:20%;
+  width:1px;
+  background:#e0e0e0;
+}
+
+   
   </style>
 </head>
 <body>
@@ -74,15 +128,15 @@
     <!-- Stats -->
     <div class="stats">
       <div class="stat-card level1" onclick="showHistory(1)">
-        <h2 id="level1Users">0</h2>
+        <h2 id="level1Users">1</h2>
         <p style="color:green;" id="level1Earning">$0</p>
       </div>
       <div class="stat-card level2" onclick="showHistory(2)">
-        <h2 id="level2Users">0</h2>
+        <h2 id="level2Users">2</h2>
         <p style="color:#f59e0b;" id="level2Earning">$0</p>
       </div>
       <div class="stat-card level3" onclick="showHistory(3)">
-        <h2 id="level3Users">0</h2>
+        <h2 id="level3Users">3</h2>
         <p style="color:#3b82f6;" id="level3Earning">$0</p>
       </div>
     </div>
@@ -91,13 +145,22 @@
     <div id="dynamicHistory" class="history"></div>
   </div>
 
-  <!-- Navbar -->
-  <nav>
-    <a href="index.html" class="home-link"><span class="home"></span>Home</a>
+ <nav>
+    <a href="index.html" class="home-link active"><span class="home"></span>Home</a>
     <a href="invest.html" class="invest-link"><span class="invest"></span>Invest</a>
-    <a href="promotion.html" class="promotion-link active"><span class="promotion"></span>Promotion</a>
+    <a href="promotion.html" class="promotion-link"><span class="promotion"></span>Promotion</a>
     <a href="account.html" class="account-link"><span class="account"></span>Account</a>
   </nav>
+   <script>
+    // JS for active highlight
+    const links = document.querySelectorAll("nav a");
+    links.forEach(link => {
+      link.addEventListener("click", function() {
+        links.forEach(l => l.classList.remove("active"));
+        this.classList.add("active");
+      });
+    });
+  </script>
 
   <!-- Firebase Script -->
   <script type="module">
@@ -188,7 +251,7 @@
       });
 
       historyBox.innerHTML = `
-        <h2>Referral History (Level ${level})</h2>
+        <h2>Referral  (Level ${level})</h2>
         <div class="history-header">
           <span>Name</span>
           <span>Date</span>
