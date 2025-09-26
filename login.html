@@ -13,14 +13,27 @@
     }
 
     .header {
-      position: fixed; top: 0; left: 0; width: 100%;
-      text-align: center; padding: 14px;
-      font-size: 18px; font-weight: bold;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;   /* ✅ dono side lock */
+      width: 100%;
+      text-align: center;
+      padding: 12px;
+      font-size: 18px;
+      font-weight: bold;
       background: linear-gradient(90deg,#4CAF50,#2c7);
-      color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-      z-index: 1000; letter-spacing: 0.5px;
+      color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      z-index: 1000;
+
+      /* 👇 Extra fix for stability */
+      transform: translateZ(0);    
+      will-change: transform;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
-    
+
 
     html, body {
       margin: 0;
