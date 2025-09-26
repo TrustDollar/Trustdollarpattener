@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promotion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      margin: 0;
+      padding-bottom: 100px;
+      color: #333;
+    }
+    .container { max-width: 950px; margin: auto; padding: 20px; }
+    h1 { text-align: center; margin-bottom: 20px; color: #1e293b; }
+
+    /* Referral Section */
+    .referral-card { background: #fff; padding: 20px; border-radius: 16px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); text-align: center; margin-bottom: 20px; }
+    .referral-link { word-break: break-all; font-size: 14px; background: #f9fafb; padding: 10px; border-radius: 8px; margin: 12px auto; }
+    .btn-row { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+    .btn { padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: #fff; }
+    .btn-copy { background: #00aaff; }
+    .btn-share { background: #ff9800; }
+    .btn:hover { opacity: 0.9; }
+
+    /* Stats */
+    .stats { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; flex-wrap: nowrap; }
+    .stat-card { background: #fff; padding: 20px; border-radius: 14px; text-align: center; box-shadow: 0 6px 16px rgba(0,0,0,0.06); font-weight: bold; flex: 1; cursor: pointer; transition: transform 0.2s ease; }
+    .stat-card:hover { transform: scale(1.05); }
+    .level1 { border-top: 5px solid #22c55e; }
+    .level2 { border-top: 5px solid #f59e0b; }
+    .level3 { border-top: 5px solid #3b82f6; }
+    .stat-card h2 { color: #111; margin: 0; font-size: 22px; }
+
+    /* History */
+    .history { margin-top: 30px; }
+    .history h2 { text-align: center; margin-bottom: 15px; color: #1e293b; }
+    .history-header { display: flex; justify-content: space-between; background: #f3f4f6; padding: 10px 15px; border-radius: 8px; font-weight: 600; font-size: 14px; }
+    .history-header span { flex: 1; text-align: center; }
+    .history-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    .history-item { display: flex; justify-content: space-between; background: #fff; padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); font-size: 13px; }
+    .history-item span { flex: 1; text-align: center; }
+    .history-item .today { color: green; font-weight: bold; }
+
+    /* Navbar */
+    nav { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; background: #ffffff; border-top: 1px solid #e5e7eb; box-shadow: 0 -3px 8px rgba(0,0,0,0.1); z-index: 1000; height: 58px; }
+    nav a { flex: 1; text-decoration: none; color: #6b7280; font-weight: 600; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 13px; position: relative; transition: all 0.3s; }
+    nav a span { width: 18px; height: 18px; display: inline-block; }
+    nav a:hover, nav a.active { color: #4f46e5; transform: translateY(-2px); }
+    nav a.active::before { content: ""; position: absolute; bottom: 0; left: 30%; width: 40%; height: 3px; background: #4f46e5; border-radius: 2px; }
+    .home { border:2px solid #06b6d4; transform:rotate(45deg); }
+    .invest { border:2px solid #2563eb; border-radius:6px; }
+    .promotion { border:2px solid #16a34a; border-radius:50%; }
+    .account { border:2px solid #f59e0b; border-radius:50% 50% 50% 0; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Promote & Earn</h1>
+
+    <!-- Referral -->
+    <div class="referral-card">
+      <p>Invite your friends and earn commissions (3 Levels).</p>
+      <div class="referral-link" id="refLink"></div>
+      <div class="btn-row">
+        <button class="btn btn-copy" onclick="copyReferral()">Copy Link</button>
+        <button class="btn btn-share" onclick="shareReferral()">Share Link</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card level1" onclick="showHistory(1)">
+        <h2 id="level1Users">0</h2>
+        <p style="color:green;" id="level1Earning">$0</p>
+      </div>
+      <div class="stat-card level2" onclick="showHistory(2)">
+        <h2 id="level2Users">0</h2>
+        <p style="color:#f59e0b;" id="level2Earning">$0</p>
+      </div>
+      <div class="stat-card level3" onclick="showHistory(3)">
+        <h2 id="level3Users">0</h2>
+        <p style="color:#3b82f6;" id="level3Earning">$0</p>
+      </div>
+    </div>
+
+    <!-- Dynamic History -->
+    <div id="dynamicHistory" class="history"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav>
+    <a href="index.html" class="home-link"><span class="home"></span>Home</a>
+    <a href="invest.html" class="invest-link"><span class="invest"></span>Invest</a>
+    <a href="promotion.html" class="promotion-link active"><span class="promotion"></span>Promotion</a>
+    <a href="account.html" class="account-link"><span class="account"></span>Account</a>
+  </nav>
+
+  <!-- Firebase Script -->
+  <script type="module">
+    // Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs ,addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // 🔑 Tumhara Firebase Config yaha paste karo
+     const firebaseConfig = {
+      apiKey: "AIzaSyDEQYPJFxQv8yFHptrTqoLHOn2L0PpgVhc",
+      authDomain: "btcinvest-c0e25.firebaseapp.com",
+      projectId: "btcinvest-c0e25",
+      storageBucket: "btcinvest-c0e25.firebasestorage.app",
+      messagingSenderId: "204937458487",
+      appId: "1:204937458487:web:cc27ece1249999279f60b2",
+      measurementId: "G-HG0Q8ZHT6G"
+    };
+
+    // Init Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Referral link show
+    const baseRegisterLink = "https://trustdollar.github.io/Trustdollarpattener/register.html";
+    const userId = "USER123";  
+    const finalRefLink = `${baseRegisterLink}?ref=${userId}`;
+    document.getElementById("refLink").textContent = finalRefLink;
+
+    // Copy & Share
+    window.copyReferral = function() {
+      navigator.clipboard.writeText(finalRefLink);
+      alert("Referral link copied!");
+    };
+    window.shareReferral = function() {
+      if (navigator.share) {
+        navigator.share({
+          title: "Join TrustDollar",
+          text: "Register now and earn with me!",
+          url: finalRefLink
+        });
+      } else {
+        alert("Sharing not supported in this browser.");
+      }
+    };
+
+    // Stats + History from Firebase
+    async function loadStats() {
+      let level1Count = 0, level2Count = 0, level3Count = 0;
+      let level1Earning = 0, level2Earning = 0, level3Earning = 0;
+
+      const q = query(collection(db, "referrals"));
+      const querySnapshot = await getDocs(q);
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        if (data.level === 1) { level1Count++; level1Earning += data.earning; }
+        if (data.level === 2) { level2Count++; level2Earning += data.earning; }
+        if (data.level === 3) { level3Count++; level3Earning += data.earning; }
+      });
+
+      document.getElementById("level1Users").textContent = level1Count;
+      document.getElementById("level2Users").textContent = level2Count;
+      document.getElementById("level3Users").textContent = level3Count;
+
+      document.getElementById("level1Earning").textContent = `$${level1Earning}`;
+      document.getElementById("level2Earning").textContent = `$${level2Earning}`;
+      document.getElementById("level3Earning").textContent = `$${level3Earning}`;
+    }
+
+    // Show History by Level
+    window.showHistory = async function(level) {
+      const historyBox = document.getElementById("dynamicHistory");
+      historyBox.innerHTML = "<p>Loading...</p>";
+
+      const q = query(collection(db, "referrals"), where("level", "==", level));
+      const querySnapshot = await getDocs(q);
+
+      let items = "";
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        items += `
+          <div class="history-item">
+            <span>${data.name}</span>
+            <span>${data.date}</span>
+            <span class="${data.today ? "today" : ""}">$${data.earning}${data.today ? " (Today)" : ""}</span>
+          </div>
+        `;
+      });
+
+      historyBox.innerHTML = `
+        <h2>Referral History (Level ${level})</h2>
+        <div class="history-header">
+          <span>Name</span>
+          <span>Date</span>
+          <span>Earning</span>
+        </div>
+        <div class="history-list">
+          ${items || "<p>No data found</p>"}
+        </div>
+      `;
+    };
+
+    // First time load
+    loadStats();
+    // Jab user register ho jaye
+async function saveReferral(name, level, earning) {
+  try {
+    await addDoc(collection(db, "referrals"), {
+      name: name,
+      date: new Date().toLocaleDateString("en-GB", { day:"2-digit", month:"short", year:"numeric" }),
+      earning: earning,
+      level: level,
+      today: true
+    });
+    console.log("Referral saved!");
+  } catch (e) {
+    console.error("Error adding referral: ", e);
+  }
+}
+  </script>
+</body>
+</html>
