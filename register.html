@@ -12,7 +12,9 @@
     }
     .header {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
+      right: 0;   /* ✅ dono side lock */
       width: 100%;
       text-align: center;
       padding: 12px;
@@ -22,6 +24,25 @@
       color: white;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
       z-index: 1000;
+
+      /* 👇 Extra fix for stability */
+      transform: translateZ(0);    
+      will-change: transform;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;   /* ✅ Left-right scroll band */
+      width: 100%;
+    }
+
+    .wrapper, .container, .info-box {
+      max-width: 100%;     
+      box-sizing: border-box;
     }
 
     .wrapper {
