@@ -99,6 +99,13 @@
       width:1px;
       background:#e0e0e0;
     }
+    .countdown {
+  font-size: 14px;
+  color: #dc2626;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
   </style>
 </head>
 <body>
@@ -219,6 +226,16 @@
           if(d.status==="Active"){total+=d.amount;profit+=d.amount*0.01*0.7;}
           const when=d.startTime?new Date(d.startTime.seconds*1000).toLocaleString():"-";
           const cls=d.status==="Completed"?"status-complete":d.status==="Active"?"status-active":"status-cancel";
+           // Agar Active hai to countdown show karega
+  let countdownHtml = "";
+  if(d.status==="Active" && d.startTime){
+    const endTime = d.startTime.seconds*1000 + 24*60*60*1000;
+    countdownHtml = `<div class="countdown" id="cd_${id}">Loading...</div>`;
+    // ✅ Countdown start karo
+    setTimeout(()=>startCountdown("cd_"+id,endTime),500);
+  }
+
+
           historyList.innerHTML+=`
             <div class="history-item">
               <div><div><b>${fmt(d.amount)}</b></div><div style="font-size:13px;color:#555;">${when}</div></div>
@@ -310,6 +327,23 @@
         }
       }
     }
+    function startCountdown(elId,endTime){
+  function update(){
+    const el=document.getElementById(elId);
+    if(!el) return;
+    const now=Date.now();
+    const diff=endTime-now;
+
+    if(diff<=0){el.textContent="Matured (Processing...)";return;}
+    const h=Math.floor(diff/(1000*60*60));
+    const m=Math.floor((diff%(1000*60*60))/(1000*60));
+    const s=Math.floor((diff%(1000*60))/1000);
+    el.textContent=`${h}h ${m}m ${s}s`;
+  }
+  update();
+  setInterval(update,1000);
+}
+
   </script>
 </body>
 </html>
