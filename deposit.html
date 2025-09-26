@@ -11,7 +11,7 @@ body {
   font-family: 'Poppins', sans-serif;
   background: #f5f7fa;
   margin: 0;
-  padding: 20px;
+ 
   padding-bottom: 100px;
   color: #333;
 }
@@ -219,40 +219,68 @@ h1 {text-align: center; margin-bottom: 20px; color: #222;}
 }
 .refresh-btn:hover {background: #138496;}
 
-       /* 🌊 Wave Bottom Navbar */
-    .wave-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 70px;
-      background: linear-gradient(135deg, #007bff, #00c6ff);
-      clip-path: polygon(0 20%, 15% 0, 85% 0, 100% 20%, 100% 100%, 0 100%);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 1000;
-      box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
-    }
-    .wave-nav a {
-      flex: 1;
-      text-align: center;
-      font-size: 13px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      display: flex;
-      flex-direction: column;   /* 👈 icon upar, text neeche */
-      align-items: center;
-      justify-content: center;
-      transition: 0.3s;
-    }
-    .wave-nav a:hover { opacity: 0.85; }
-    .wave-nav a.active { color: #ffeb3b; }
-    .wave-nav i {
-      font-size: 22px;
-      margin-bottom: 4px;
-    }
+nav {
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+  background:#fff;
+  border-top:1px solid #e5e7eb;
+  box-shadow:0 -2px 6px rgba(0,0,0,0.1);
+  z-index:1000;
+  height:55px; /* navbar की height छोटी की */
+}
+nav a {
+  flex:1;
+  text-decoration:none;
+  color:#333;
+  font-weight:500;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  font-size:12px;   /* छोटा font */
+  position:relative;
+}
+nav a span {
+  width:16px;
+  height:16px;
+  display:inline-block;
+}
+/* Hover + Active */
+nav a:hover,
+nav a.active {
+  color:#4f46e5;
+}
+nav a.active::before {
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:30%;
+  width:40%;
+  height:2px;
+  background:#4f46e5;
+  border-radius:2px;
+}
+/* Shapes */
+.home { border:2px solid #06b6d4; transform:rotate(45deg); }
+.invest { border:2px solid #2563eb; border-radius:4px; }
+.promotion { border:2px solid #16a34a; border-radius:50%; }
+.account { border:2px solid #f59e0b; border-radius:50% 50% 50% 0; }
+
+/* Vertical Divider (slim line, bigger) */
+nav a:not(:last-child)::after {
+  content:"";
+  position:absolute;
+  right:0;
+  top:20%;
+  bottom:20%;
+  width:1px;
+  background:#e0e0e0;
+}
+
   </style>
 </head>
 <body>
@@ -293,22 +321,22 @@ h1 {text-align: center; margin-bottom: 20px; color: #222;}
   <div class="thankyou-popup" id="thankyouPopup">Thank you for paying </div>
   <div class="error-popup" id="errorPopup">Enter valid amount</div>
 
-   <!-- 🌊 Wave Bottom Navigation -->
-  <div class="wave-nav">
-    <a href="dashboard.html" class="active">
-      <i data-lucide="home"></i>
-      <span>Home</span>
-    </a>
-    <a href="investment.html">
-      <i data-lucide="trending-up"></i>
-      <span>Invest</span>
-    </a>
-    <a href="account.html">
-      <i data-lucide="user"></i>
-      <span>Account</span>
-    </a>
-  </div>
-
+ <nav>
+    <a href="home.html" class="home-link active"><span class="home"></span>Home</a>
+    <a href="invest.html" class="invest-link"><span class="invest"></span>Invest</a>
+    <a href="promotion.html" class="promotion-link"><span class="promotion"></span>Promotion</a>
+    <a href="account.html" class="account-link"><span class="account"></span>Account</a>
+  </nav>
+   <script>
+    // JS for active highlight
+    const links = document.querySelectorAll("nav a");
+    links.forEach(link => {
+      link.addEventListener("click", function() {
+        links.forEach(l => l.classList.remove("active"));
+        this.classList.add("active");
+      });
+    });
+  </script>
   <!-- ✅ Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script> lucide.createIcons(); </script>
