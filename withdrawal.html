@@ -210,7 +210,7 @@
       const snap = await getDoc(ref);
       if (snap.exists()) {
         const data = snap.data();
-        userBalance = data.balance || 0;
+        userBalance = data.walletBalance || 0; 
         userWalletAddress = data.walletAddress || "";
         balanceEl.textContent = userBalance.toFixed(2);
         popupBalance.textContent = userBalance.toFixed(2);
@@ -249,8 +249,9 @@
         });
 
         // Balance minus
-        const ref = doc(db, "users", currentUserId);
-        await updateDoc(ref, { balance: userBalance - amount });
+       const ref = doc(db, "users", currentUserId);
+       await updateDoc(ref, { walletBalance: userBalance - amount });  // ✅ fixed
+
 
         loadWithdrawHistory(currentUserId);
         loadUserProfile(currentUserId);
