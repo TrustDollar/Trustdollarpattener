@@ -107,8 +107,22 @@ nav a:not(:last-child)::after {
   background:#e0e0e0;
 }
 
-   
-  </style>
+.stats-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 10px 0 -10px 0; /* box ke upar chipka ke */
+  padding: 0 5px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+.stats-header div {
+  flex: 1;
+}
+
+   </style>
 </head>
 <body>
 
@@ -124,6 +138,13 @@ nav a:not(:last-child)::after {
         <button class="btn btn-share" onclick="shareReferral()">Share Link</button>
       </div>
     </div>
+
+    <!-- Stats Heading -->
+<div class="stats-header">
+  <div>LV1</div>
+  <div>LV2</div>
+  <div>LV3</div>
+</div>
 
     <!-- Stats -->
     <div class="stats">
